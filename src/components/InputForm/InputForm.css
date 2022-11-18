@@ -1,0 +1,11 @@
+form{
+    text-align: center;
+}
+
+.input-add{
+    padding: 8px 80px;
+}
+.btn-add{
+    padding: 8px;
+    margin-left: 20px;
+}
