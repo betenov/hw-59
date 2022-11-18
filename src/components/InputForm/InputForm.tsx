@@ -1,47 +1,45 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import './InputForm.css'
-import {MovieBlog} from "../../types";
-
-interface State {
- movie:string;
- id:string;
-}
-
-class InputForm extends Component<{} , State> {
-  state = {
-    movie:'',
-    id:''
-  }
 
 
-  onChange = (event:React.ChangeEvent<HTMLInputElement>) => {
 
 
-    this.setState({movie:event.target.value})
-  }
+const InputForm = () => {
+ const [movie , setMovie] = useState([
+   {movie:'Avatar' , id:'1'}
+ ])
+  const [nameMovie, setNameMovie] =useState('')
 
-   onSubmit = (event:React.FormEvent) => {
+  const  onSubmit = (event:React.FormEvent) => {
     event.preventDefault();
-     this.setState(prev=> ({
-       ...prev,
-       movie:prev.movie , id:Math.random().toString()
-     }))
-console.log(this.state)
+    setMovie(prevState=> [
+        ...prevState ,{movie:nameMovie,id:Math.random().toString()}
+      ]
+    )
+    setNameMovie('')
+
+  }
+  const onDelete = (id:string) => {
+   setMovie(prevState => prevState.filter(mov => mov.id !== id ))
   }
 
-  render() {
 
-    return (
+  return (
       <div>
-         <form onSubmit={this.onSubmit}>
-           <input className="input-add" type="text" value={this.state.movie} onChange={(e)  => this.onChange(e)}  />
-           <button className="btn-add" type="submit" >Add</button>
+         <form onSubmit={onSubmit}>
+           <input className="input-add" type="text" value={nameMovie}  onChange={event => setNameMovie(event.target.value)}  />
+           <button className="btn-add" type="submit">Add</button>
          </form>
         <div>
+          {movie.map(mov => (
+            <div className="input" key={mov.id} >
+             <input className="movie-card" value={mov.movie} onChange={event => (event.target.value)} />
+              <button onClick={() => onDelete(mov.id)}>Delete</button>
+            </div>
+          ))}
         </div>
       </div>
     );
-  }
 }
 
 export default InputForm;

@@ -3,9 +3,11 @@ import InputForm from "./components/InputForm/InputForm";
 
 
 function App() {
+
+
   return (
     <>
-      <InputForm/>
+      <InputForm />
     </>
   );
 }
